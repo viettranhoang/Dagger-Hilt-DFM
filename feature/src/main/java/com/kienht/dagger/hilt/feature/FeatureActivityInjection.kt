@@ -1,17 +1,19 @@
 package com.kienht.dagger.hilt.feature
 
 import android.app.Activity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.kienht.dagger.hilt.core.UserModel
+import com.kienht.dagger.hilt.core.ViewModelFactory
 import com.kienht.dagger.hilt.core.di.ActivityViewModelModule
 import com.kienht.dagger.hilt.core.di.CoreModuleDependencies
 import com.kienht.dagger.hilt.core.di.UserModelFeatureQualifier
-import dagger.BindsInstance
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import com.kienht.dagger.hilt.core.di.ViewModelKey
+import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.components.ActivityComponent
+import dagger.multibindings.IntoMap
 
 /**
  * @author kienht
@@ -48,9 +50,17 @@ interface FeatureActivityComponent {
     }
 }
 
-@Module(includes = [FeatureActivityViewModel_HiltModule::class, ActivityViewModelModule::class])
+@Module(includes = [ ActivityViewModelModule::class])
 @InstallIn(ActivityComponent::class)
 abstract class FeatureActivityModule {
+
+    @Binds
+    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FeatureActivityViewModel::class)
+    abstract fun bindFeatureActivityViewModel(featureActivityViewModel: FeatureActivityViewModel): ViewModel
 
     companion object {
 

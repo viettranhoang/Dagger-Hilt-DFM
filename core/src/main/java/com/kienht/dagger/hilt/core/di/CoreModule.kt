@@ -4,7 +4,7 @@ import com.kienht.dagger.hilt.core.UserModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
@@ -12,7 +12,7 @@ import javax.inject.Singleton
  * @since 15/09/2020
  */
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object CoreModule {
 
     @Provides

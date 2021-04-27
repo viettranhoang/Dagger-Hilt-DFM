@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
-import com.kienht.dagger.hilt.core.DFMSavedStateViewModelFactory
 import com.kienht.dagger.hilt.core.UserModel
 import com.kienht.dagger.hilt.core.di.UserModelSingletonQualifier
 import com.kienht.dagger.hilt.feature.FeatureActivityViewModel
@@ -28,14 +27,14 @@ class FeatureListFragment : Fragment(R.layout.feature_list_fragment) {
     @UserModelSingletonQualifier
     lateinit var singletonUserModel: UserModel
 
-    @Inject
-    lateinit var savedStateViewModelFactory: DFMSavedStateViewModelFactory
+//    @Inject
+//    lateinit var savedStateViewModelFactory: DFMSavedStateViewModelFactory
 
-    private val featureActivityViewModel by activityViewModels<FeatureActivityViewModel> { savedStateViewModelFactory }
+    private val featureActivityViewModel by activityViewModels<FeatureActivityViewModel> ()
 
-    private val featureListViewModel by viewModels<FeatureListViewModel> { savedStateViewModelFactory }
+    private val featureListViewModel by viewModels<FeatureListViewModel> ()
 
-    private val featureSharedNavViewModel by navGraphViewModels<FeatureSharedNavViewModel>(R.id.feature_nav_graph) { savedStateViewModelFactory }
+//    private val featureSharedNavViewModel by navGraphViewModels<FeatureSharedNavViewModel>(R.id.feature_nav_graph) {  }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

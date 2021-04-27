@@ -3,7 +3,7 @@ package com.kienht.dagger.hilt.feature
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.kienht.dagger.hilt.core.DFMSavedStateViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import com.kienht.dagger.hilt.core.UserModel
 import com.kienht.dagger.hilt.core.di.UserModelSingletonQualifier
 import timber.log.Timber
@@ -19,10 +19,13 @@ class FeatureActivity : AppCompatActivity(R.layout.feature_activity) {
     @UserModelSingletonQualifier
     lateinit var singletonUserModel: UserModel
 
-    @Inject
-    lateinit var savedStateViewModelFactory: DFMSavedStateViewModelFactory
+//    @Inject
+//    lateinit var savedStateViewModelFactory: DFMSavedStateViewModelFactory
 
-    private val featureActivityViewModel by viewModels<FeatureActivityViewModel> { savedStateViewModelFactory }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val featureActivityViewModel by viewModels<FeatureActivityViewModel>{ viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()

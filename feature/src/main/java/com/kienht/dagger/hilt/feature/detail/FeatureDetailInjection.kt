@@ -6,7 +6,6 @@ import com.kienht.dagger.hilt.core.UserModel
 import com.kienht.dagger.hilt.core.di.CoreModuleDependencies
 import com.kienht.dagger.hilt.core.di.FragmentViewModelModule
 import com.kienht.dagger.hilt.core.di.UserModelFeatureQualifier
-import com.kienht.dagger.hilt.feature.FeatureSharedNavViewModel_HiltModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -52,8 +51,6 @@ interface FeatureDetailFragmentComponent {
 
 @Module(
     includes = [
-        FeatureDetailViewModel_HiltModule::class,
-        FeatureSharedNavViewModel_HiltModule::class,
         FragmentViewModelModule::class
     ]
 )

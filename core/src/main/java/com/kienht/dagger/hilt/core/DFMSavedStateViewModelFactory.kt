@@ -13,26 +13,30 @@ import javax.inject.Provider
  * @author kienht
  * @since 15/09/2020
  */
-//class DFMSavedStateViewModelFactory(
-//    owner: SavedStateRegistryOwner,
-//    defaultArgs: Bundle?,
-//    private val delegateFactory: SavedStateViewModelFactory,
-//    private val viewModelFactories: @JvmSuppressWildcards Map<String, Provider<Class<out ViewModel>>>,
-//) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
-//
-//    @SuppressLint("RestrictedApi")
-//    override fun <T : ViewModel?> create(
-//        key: String,
-//        modelClass: Class<T>,
-//        handle: SavedStateHandle
-//    ): T {
-//        val factoryProvider = viewModelFactories[modelClass.name]
-//            ?: return delegateFactory.create("$KEY_PREFIX:$key", modelClass)
-//        @Suppress("UNCHECKED_CAST")
-//        return factoryProvider.get().create(handle) as T
-//    }
-//
-//    companion object {
-//        private const val KEY_PREFIX = "androidx.hilt.lifecycle.HiltViewModelFactory"
-//    }
-//}
+class DFMSavedStateViewModelFactory(
+        owner: SavedStateRegistryOwner,
+        defaultArgs: Bundle?,
+        private val delegateFactory: SavedStateViewModelFactory,
+        private val viewModelFactories: @JvmSuppressWildcards Map<String, Provider<AssistedSavedStateViewModelFactory<out ViewModel>>>,
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+
+    @SuppressLint("RestrictedApi")
+    override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+    ): T {
+        val factoryProvider = viewModelFactories[modelClass.name]
+                ?: return delegateFactory.create("$KEY_PREFIX:$key", modelClass)
+        @Suppress("UNCHECKED_CAST")
+        return factoryProvider.get().create(handle) as T
+    }
+
+    companion object {
+        private const val KEY_PREFIX = "androidx.hilt.lifecycle.HiltViewModelFactory"
+    }
+}
+
+interface AssistedSavedStateViewModelFactory<T : ViewModel> {
+    fun create(savedStateHandle: SavedStateHandle): T
+}

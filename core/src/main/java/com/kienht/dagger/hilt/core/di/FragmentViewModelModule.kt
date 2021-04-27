@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModel
+import com.kienht.dagger.hilt.core.AssistedSavedStateViewModelFactory
+import com.kienht.dagger.hilt.core.DFMSavedStateViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +20,14 @@ import javax.inject.Provider
 @InstallIn(FragmentComponent::class)
 object FragmentViewModelModule {
 
-//    @Provides
-//    fun provideSavedStateViewModelFactory(
-//        application: Application,
-//        fragment: Fragment,
-//        viewModelFactories: @JvmSuppressWildcards Map<String, Provider<ViewModelAssistedFactory<out ViewModel>>>,
-//    ): DFMSavedStateViewModelFactory {
-//        val defaultArgs = fragment.arguments
-//        val delegate = SavedStateViewModelFactory(application, fragment, defaultArgs)
-//        return DFMSavedStateViewModelFactory(fragment, defaultArgs, delegate, viewModelFactories)
-//    }
+    @Provides
+    fun provideSavedStateViewModelFactory(
+            application: Application,
+            fragment: Fragment,
+            viewModelFactories: @JvmSuppressWildcards Map<String, Provider<AssistedSavedStateViewModelFactory<out ViewModel>>>,
+    ): DFMSavedStateViewModelFactory {
+        val defaultArgs = fragment.arguments
+        val delegate = SavedStateViewModelFactory(application, fragment, defaultArgs)
+        return DFMSavedStateViewModelFactory(fragment, defaultArgs, delegate, viewModelFactories)
+    }
 }

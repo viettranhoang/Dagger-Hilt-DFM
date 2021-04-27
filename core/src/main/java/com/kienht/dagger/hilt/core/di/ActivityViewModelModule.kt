@@ -5,6 +5,8 @@ import android.app.Application
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
+import com.kienht.dagger.hilt.core.AssistedSavedStateViewModelFactory
+import com.kienht.dagger.hilt.core.DFMSavedStateViewModelFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,15 +21,15 @@ import javax.inject.Provider
 @InstallIn(ActivityComponent::class)
 object ActivityViewModelModule {
 
-//    @Provides
-//    fun provideSavedStateViewModelFactory(
-//        application: Application,
-//        activity: Activity,
-//        viewModelFactories: @JvmSuppressWildcards Map<String, Provider<ViewModelAssistedFactory<out ViewModel>>>,
-//    ): DFMSavedStateViewModelFactory {
-//        val owner = activity as SavedStateRegistryOwner
-//        val defaultArgs = activity.intent?.extras
-//        val delegate = SavedStateViewModelFactory(application, owner, defaultArgs)
-//        return DFMSavedStateViewModelFactory(owner, defaultArgs, delegate, viewModelFactories)
-//    }
+    @Provides
+    fun provideSavedStateViewModelFactory(
+            application: Application,
+            activity: Activity,
+            viewModelFactories: @JvmSuppressWildcards Map<String, Provider<AssistedSavedStateViewModelFactory<out ViewModel>>>,
+    ): DFMSavedStateViewModelFactory {
+        val owner = activity as SavedStateRegistryOwner
+        val defaultArgs = activity.intent?.extras
+        val delegate = SavedStateViewModelFactory(application, owner, defaultArgs)
+        return DFMSavedStateViewModelFactory(owner, defaultArgs, delegate, viewModelFactories)
+    }
 }

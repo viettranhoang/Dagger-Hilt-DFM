@@ -22,10 +22,8 @@ class FeatureActivity : AppCompatActivity(R.layout.feature_activity) {
 //    @Inject
 //    lateinit var savedStateViewModelFactory: DFMSavedStateViewModelFactory
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val featureActivityViewModel by viewModels<FeatureActivityViewModel>{ viewModelFactory }
+    private val featureActivityViewModel by viewModels<FeatureActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
